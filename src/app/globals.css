@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+/*
+ * MeshVigil control-room theme. Dark, dense, phosphor-accented — a NOC wall, not
+ * a marketing page. Colours are tuned for long dwell time and clear status
+ * signalling (green online / amber degraded / red down / slate unreachable).
+ */
+@theme {
+  --color-void: #060910;
+  --color-abyss: #0a0e17;
+  --color-panel: #0d131f;
+  --color-panel-2: #111927;
+  --color-edge: #1b2636;
+  --color-edge-bright: #26364b;
+
+  --color-ink: #e6edf6;
+  --color-ink-dim: #9fb0c3;
+  /* Lifted from #64768c so normal-size text clears WCAG AA (4.5:1) on the
+     darkest panels, while still reading as the faintest tier. */
+  --color-ink-faint: #74839a;
+
+  --color-signal: #34e5c6; /* primary accent — teal phosphor */
+  --color-signal-dim: #1c8f7d;
+  --color-flux: #6ea8fe; /* secondary — data/link blue */
+
+  --color-online: #3ddc84;
+  --color-degraded: #f7b32b;
+  --color-down: #ff5964;
+  --color-unreachable: #5b6b80;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+
+  --radius-panel: 0.75rem;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+/* A single, consistent keyboard focus ring for every interactive element.
+   Only shows for keyboard users (:focus-visible), never on mouse click. */
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(52, 229, 198, 0.06), transparent 60%),
+    radial-gradient(900px 500px at 5% 110%, rgba(110, 168, 254, 0.05), transparent 55%),
+    var(--color-void);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Faint NOC grid behind everything. */
+.noc-grid {
+  background-image:
+    linear-gradient(rgba(38, 54, 75, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(38, 54, 75, 0.25) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Thin, dark scrollbars that match the console. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-edge-bright) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-edge-bright);
+  border-radius: 999px;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 229, 198, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(52, 229, 198, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 229, 198, 0);
+  }
+}
+.live-dot {
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes flash {
+  from {
+    background-color: rgba(247, 179, 43, 0.18);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+.row-flash {
+  animation: flash 1.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot,
+  .row-flash {
+    animation: none;
+  }
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
