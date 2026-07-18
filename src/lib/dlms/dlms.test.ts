@@ -83,7 +83,7 @@ describe("OBIS catalogue", () => {
   });
 
   it("describes a known register", () => {
-    expect(describeObis("1.0.1.8.0.255").label).toMatch(/Active energy import/i);
+    expect(describeObis("1.0.1.8.0.255").label).toMatch(/Energia ativa importada/i);
     expect(isKnownObis("1.0.1.8.0.255")).toBe(true);
     expect(isKnownObis("9.9.9.9.9.9")).toBe(false);
   });

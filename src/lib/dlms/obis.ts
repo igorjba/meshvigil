@@ -25,14 +25,14 @@ export interface ObisDefinition {
 
 /** Media (value group A) — the physical domain the register belongs to. */
 export const OBIS_MEDIA: Record<number, string> = {
-  0: "Abstract",
-  1: "Electricity",
-  4: "Heat cost allocator",
-  5: "Cooling",
-  6: "Heat",
+  0: "Abstrato",
+  1: "Eletricidade",
+  4: "Rateio de calor",
+  5: "Refrigeracao",
+  6: "Calor",
   7: "Gas",
-  8: "Water (cold)",
-  9: "Water (hot)",
+  8: "Agua (fria)",
+  9: "Agua (quente)",
 };
 
 export function toObisCode(groups: Uint8Array | readonly number[]): ObisCode {
@@ -53,37 +53,37 @@ export function toObisCode(groups: Uint8Array | readonly number[]): ObisCode {
  * hundreds — but every entry here is a genuine, standard-defined code.
  */
 const CATALOG: Record<string, Omit<ObisDefinition, "id">> = {
-  "1.0.1.8.0.255": { label: "Active energy import (+A), total", unit: "kWh", kind: "energy" },
-  "1.0.2.8.0.255": { label: "Active energy export (-A), total", unit: "kWh", kind: "energy" },
-  "1.0.3.8.0.255": { label: "Reactive energy import (+R), total", unit: "kvarh", kind: "energy" },
-  "1.0.1.8.1.255": { label: "Active energy import, tariff 1", unit: "kWh", kind: "energy" },
-  "1.0.1.8.2.255": { label: "Active energy import, tariff 2", unit: "kWh", kind: "energy" },
-  "1.0.1.7.0.255": { label: "Instantaneous active power (+P)", unit: "W", kind: "power" },
-  "1.0.2.7.0.255": { label: "Instantaneous active power (-P)", unit: "W", kind: "power" },
-  "1.0.32.7.0.255": { label: "Instantaneous voltage, L1", unit: "V", kind: "voltage" },
-  "1.0.52.7.0.255": { label: "Instantaneous voltage, L2", unit: "V", kind: "voltage" },
-  "1.0.72.7.0.255": { label: "Instantaneous voltage, L3", unit: "V", kind: "voltage" },
-  "1.0.31.7.0.255": { label: "Instantaneous current, L1", unit: "A", kind: "current" },
-  "1.0.51.7.0.255": { label: "Instantaneous current, L2", unit: "A", kind: "current" },
-  "1.0.71.7.0.255": { label: "Instantaneous current, L3", unit: "A", kind: "current" },
-  "1.0.14.7.0.255": { label: "Frequency", unit: "Hz", kind: "quality" },
-  "1.0.13.7.0.255": { label: "Instantaneous power factor", kind: "quality" },
-  "0.0.1.0.0.255": { label: "Clock", kind: "clock" },
-  "0.0.96.1.0.255": { label: "Device ID 1 (serial number)", kind: "identity" },
-  "0.0.96.1.1.255": { label: "Device ID 2 (equipment identifier)", kind: "identity" },
-  "0.0.42.0.0.255": { label: "COSEM logical device name", kind: "identity" },
-  "0.0.96.3.10.255": { label: "Disconnect control — output state", kind: "other" },
-  "0.0.96.7.0.255": { label: "Number of power failures", kind: "quality" },
-  // Vendor/abstract range used here for link telemetry surfaced over COSEM.
-  "0.0.96.240.0.255": { label: "RF received signal strength (RSSI)", unit: "dBm", kind: "quality" },
-  "0.0.96.240.1.255": { label: "Mesh hop count to head-end", unit: "hops", kind: "quality" },
+  "1.0.1.8.0.255": { label: "Energia ativa importada (+A), total", unit: "kWh", kind: "energy" },
+  "1.0.2.8.0.255": { label: "Energia ativa exportada (-A), total", unit: "kWh", kind: "energy" },
+  "1.0.3.8.0.255": { label: "Energia reativa importada (+R), total", unit: "kvarh", kind: "energy" },
+  "1.0.1.8.1.255": { label: "Energia ativa importada, tarifa 1", unit: "kWh", kind: "energy" },
+  "1.0.1.8.2.255": { label: "Energia ativa importada, tarifa 2", unit: "kWh", kind: "energy" },
+  "1.0.1.7.0.255": { label: "Potencia ativa instantanea (+P)", unit: "W", kind: "power" },
+  "1.0.2.7.0.255": { label: "Potencia ativa instantanea (-P)", unit: "W", kind: "power" },
+  "1.0.32.7.0.255": { label: "Tensao instantanea, L1", unit: "V", kind: "voltage" },
+  "1.0.52.7.0.255": { label: "Tensao instantanea, L2", unit: "V", kind: "voltage" },
+  "1.0.72.7.0.255": { label: "Tensao instantanea, L3", unit: "V", kind: "voltage" },
+  "1.0.31.7.0.255": { label: "Corrente instantanea, L1", unit: "A", kind: "current" },
+  "1.0.51.7.0.255": { label: "Corrente instantanea, L2", unit: "A", kind: "current" },
+  "1.0.71.7.0.255": { label: "Corrente instantanea, L3", unit: "A", kind: "current" },
+  "1.0.14.7.0.255": { label: "Frequencia", unit: "Hz", kind: "quality" },
+  "1.0.13.7.0.255": { label: "Fator de potencia instantaneo", kind: "quality" },
+  "0.0.1.0.0.255": { label: "Relogio", kind: "clock" },
+  "0.0.96.1.0.255": { label: "ID do dispositivo 1 (numero de serie)", kind: "identity" },
+  "0.0.96.1.1.255": { label: "ID do dispositivo 2 (identificador do equipamento)", kind: "identity" },
+  "0.0.42.0.0.255": { label: "Nome logico do dispositivo COSEM", kind: "identity" },
+  "0.0.96.3.10.255": { label: "Controle de corte — estado da saida", kind: "other" },
+  "0.0.96.7.0.255": { label: "Numero de quedas de energia", kind: "quality" },
+  // Faixa abstrata/vendor usada aqui para telemetria do enlace exposta via COSEM.
+  "0.0.96.240.0.255": { label: "Forca do sinal de radio recebido (RSSI)", unit: "dBm", kind: "quality" },
+  "0.0.96.240.1.255": { label: "Saltos na malha ate a central", unit: "saltos", kind: "quality" },
 };
 
 export function describeObis(code: ObisCode | string): ObisDefinition {
   const id = typeof code === "string" ? code : code.id;
   const known = CATALOG[id];
   if (known) return { id, ...known };
-  return { id, label: `Unknown register ${id}`, kind: "other" };
+  return { id, label: `Registrador desconhecido ${id}`, kind: "other" };
 }
 
 export function isKnownObis(id: string): boolean {

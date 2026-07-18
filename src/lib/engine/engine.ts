@@ -155,7 +155,7 @@ function trackOutages(state: SimState, events: SimEvent[]): void {
         tick: state.tick,
         level: "success",
         code: "mesh.recovered",
-        message: `${node.label} rejoined after ${account.outageTicks} tick(s)`,
+        message: `${node.label} voltou apos ${account.outageTicks} tick(s)`,
         nodeId: node.id,
       });
       account.outageTicks = 0;

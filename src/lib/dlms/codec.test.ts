@@ -102,10 +102,10 @@ describe("HDLC control frames", () => {
 
 describe("OBIS catalogue", () => {
   it("exposes media, reduced form and a non-empty catalogue", () => {
-    expect(OBIS_MEDIA[1]).toBe("Electricity");
+    expect(OBIS_MEDIA[1]).toBe("Eletricidade");
     expect(toObisCode(hexToBytes("0100010800FF")).id).toBe("1.0.1.8.0.255");
     expect(listKnownObis().length).toBeGreaterThan(10);
-    expect(describeObis("9.9.9.9.9.9").label).toMatch(/Unknown/);
+    expect(describeObis("9.9.9.9.9.9").label).toMatch(/desconhecido/i);
     expect(() => toObisCode([1, 2, 3])).toThrow();
   });
 });

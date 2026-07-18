@@ -83,7 +83,7 @@ export function buildTopology(config: SimConfig): Topology {
   const rng = new Rng(hashString(`topology:${config.seed}`));
   const nodes: Record<string, MeshNode> = {};
 
-  const headend = newNode("HE-01", "headend", "Head-End", 0.5, 0.07);
+  const headend = newNode("HE-01", "headend", "Central", 0.5, 0.07);
   nodes[headend.id] = headend;
 
   // Collectors span the full width, well separated, a little below the head-end.
@@ -92,7 +92,7 @@ export function buildTopology(config: SimConfig): Topology {
     const frac = config.collectorCount === 1 ? 0.5 : i / (config.collectorCount - 1);
     const x = 0.1 + frac * 0.8 + rng.jitter(0.03);
     const y = 0.26 + rng.jitter(0.04);
-    const node = newNode(`COL-${String(i + 1).padStart(2, "0")}`, "collector", `Collector ${i + 1}`, x, y);
+    const node = newNode(`COL-${String(i + 1).padStart(2, "0")}`, "collector", `Coletor ${i + 1}`, x, y);
     collectors.push(node);
     nodes[node.id] = node;
   }
@@ -104,7 +104,7 @@ export function buildTopology(config: SimConfig): Topology {
     const angle = rng.range(0, Math.PI * 2);
     const x = home.x + Math.cos(angle) * radius;
     const y = home.y + 0.09 + Math.abs(Math.sin(angle)) * radius;
-    const node = newNode(`MTR-${String(i + 1).padStart(4, "0")}`, "meter", `Meter ${i + 1}`, x, y);
+    const node = newNode(`MTR-${String(i + 1).padStart(4, "0")}`, "meter", `Medidor ${i + 1}`, x, y);
     nodes[node.id] = node;
   }
 

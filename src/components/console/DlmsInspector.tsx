@@ -57,9 +57,10 @@ export function DlmsInspector() {
 
   return (
     <Panel
-      title="DLMS / COSEM Inspector"
+      title="Inspetor DLMS / COSEM"
       icon={<Binary size={13} />}
-      tag={pinned && !customHex ? "pinned frame" : "sample"}
+      tag={pinned && !customHex ? "frame fixado" : "exemplo"}
+      hint="DLMS/COSEM e o protocolo que os medidores reais usam. Aqui os bytes crus de um frame sao traduzidos para valores legiveis (energia, tensao...). Passe o mouse sobre um byte ou um campo para ver a que parte ele pertence."
       className="min-h-0"
     >
       <div className="flex h-full min-h-0 flex-col">
@@ -131,7 +132,7 @@ export function DlmsInspector() {
           <input
             value={customHex}
             onChange={(e) => setCustomHex(e.target.value)}
-            placeholder="Paste a DLMS/COSEM frame in hex (e.g. 7E A0 33 …) to decode it"
+            placeholder="Cole um frame DLMS/COSEM em hexadecimal (ex.: 7E A0 33 …) para decodificar"
             spellCheck={false}
             maxLength={8192}
             className="w-full rounded-md border border-edge bg-void/60 px-2.5 py-1.5 font-mono text-[0.72rem] text-ink placeholder:text-ink-faint focus:border-signal/50"
@@ -142,14 +143,22 @@ export function DlmsInspector() {
   );
 }
 
+const GROUP_LABEL: Record<FieldGroup, string> = { hdlc: "HDLC", llc: "LLC", apdu: "APDU", data: "dados" };
+const GROUP_HINT: Record<FieldGroup, string> = {
+  hdlc: "Camada de enlace: delimita o frame, enderecos e verificacoes de integridade",
+  llc: "Cabecalho de controle logico do enlace",
+  apdu: "Mensagem da aplicacao (ex.: notificacao de dados do medidor)",
+  data: "Os valores medidos em si (energia, tensao, etc.)",
+};
+
 function Legend() {
   const groups: FieldGroup[] = ["hdlc", "llc", "apdu", "data"];
   return (
-    <div className="flex flex-wrap gap-x-3 gap-y-1">
+    <div className="flex flex-wrap gap-x-3 gap-y-1" title="As cores agrupam os bytes por camada do protocolo">
       {groups.map((g) => (
-        <span key={g} className={cn("flex items-center gap-1", GROUP_COLOR[g])}>
+        <span key={g} className={cn("flex cursor-help items-center gap-1", GROUP_COLOR[g])} title={GROUP_HINT[g]}>
           <span className="inline-block h-2 w-2 rounded-sm bg-current opacity-70" />
-          {g}
+          {GROUP_LABEL[g]}
         </span>
       ))}
     </div>
@@ -207,14 +216,23 @@ function DecodedView({
       {/* readings */}
       {parsed.readings.length > 0 && (
         <div>
-          <div className="mb-1 text-[0.6rem] uppercase tracking-wider text-ink-faint">Decoded registers</div>
+          <div
+            className="mb-1 cursor-help text-[0.6rem] uppercase tracking-wider text-ink-faint"
+            title="Os valores finais extraidos do frame. O codigo OBIS identifica o que cada numero significa."
+          >
+            Registradores decodificados
+          </div>
           <div className="flex flex-col gap-1">
             {parsed.readings.map((r, i) => (
-              <div key={i} className="flex items-center gap-2 rounded-md border border-edge/50 bg-panel-2/40 px-2.5 py-1.5">
+              <div
+                key={i}
+                className="flex items-center gap-2 rounded-md border border-edge/50 bg-panel-2/40 px-2.5 py-1.5"
+                title={`OBIS ${r.obis} — codigo padrao que identifica esta grandeza`}
+              >
                 <span className="font-mono text-online">{r.obis}</span>
                 <span className="flex-1 truncate text-ink-dim">{r.label}</span>
                 <span className="font-mono font-semibold text-ink tabular">
-                  {typeof r.value === "number" ? r.value.toLocaleString("en-US") : r.value}
+                  {typeof r.value === "number" ? r.value.toLocaleString("pt-BR") : r.value}
                   {r.unit ? ` ${r.unit}` : ""}
                 </span>
               </div>
@@ -236,16 +254,22 @@ function DecodedView({
   );
 }
 
+const CRC_HINT: Record<string, string> = {
+  FCS: "Frame Check Sequence: verificacao de integridade do frame inteiro (como um digito verificador). Se falha, o frame chegou corrompido.",
+  HCS: "Header Check Sequence: verificacao de integridade so do cabecalho do frame.",
+};
+
 function CrcBadge({ ok, label }: { ok: boolean; label: string }) {
   return (
     <span
+      title={CRC_HINT[label]}
       className={cn(
-        "flex items-center gap-1 rounded-md border px-2 py-0.5 font-mono",
+        "flex cursor-help items-center gap-1 rounded-md border px-2 py-0.5 font-mono",
         ok ? "border-online/40 bg-online/10 text-online" : "border-down/40 bg-down/10 text-down",
       )}
     >
       {ok ? <CircleCheck size={12} /> : <CircleX size={12} />}
-      {label} {ok ? "ok" : "fail"}
+      {label} {ok ? "ok" : "falhou"}
     </span>
   );
 }

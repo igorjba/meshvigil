@@ -119,7 +119,7 @@ export function TopologyCanvas() {
         onClick={onClick}
         className="h-full w-full"
         role="img"
-        aria-label="RF mesh network topology"
+        aria-label="Topologia da rede mesh de radio"
       />
       {hoverLabel && (
         <div
@@ -130,7 +130,7 @@ export function TopologyCanvas() {
           {Number.isFinite(hoverLabel.node.hopCount) && hoverLabel.node.kind !== "headend" && (
             <span className="text-ink-faint"> · {hoverLabel.node.hopCount}h · {hoverLabel.node.rssi} dBm</span>
           )}
-          {!Number.isFinite(hoverLabel.node.hopCount) && <span className="text-down"> · unreachable</span>}
+          {!Number.isFinite(hoverLabel.node.hopCount) && <span className="text-down"> · inacessivel</span>}
         </div>
       )}
       <Legend />
@@ -141,9 +141,9 @@ export function TopologyCanvas() {
 function Legend() {
   const items: { label: string; color: string }[] = [
     { label: "online", color: STATUS_HEX.online },
-    { label: "degraded", color: STATUS_HEX.degraded },
-    { label: "down", color: STATUS_HEX.offline },
-    { label: "unreachable", color: STATUS_HEX.unreachable },
+    { label: "degradado", color: STATUS_HEX.degraded },
+    { label: "fora do ar", color: STATUS_HEX.offline },
+    { label: "inacessivel", color: STATUS_HEX.unreachable },
   ];
   return (
     <div className="absolute bottom-3 left-3 flex flex-wrap gap-x-3 gap-y-1 rounded-md border border-edge/60 bg-abyss/70 px-2.5 py-1.5 text-[0.62rem] text-ink-dim backdrop-blur">

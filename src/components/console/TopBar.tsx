@@ -46,7 +46,7 @@ export function TopBar() {
               AMI · DLMS/COSEM
             </span>
           </div>
-          <p className="hidden text-[0.66rem] text-ink-faint md:block">Mesh simulator &amp; observability console</p>
+          <p className="hidden text-[0.66rem] text-ink-faint md:block">Simulador de rede mesh &amp; console de monitoramento</p>
         </div>
       </div>
 
@@ -55,18 +55,24 @@ export function TopBar() {
         <button
           type="button"
           onClick={() => (running ? pause() : play())}
+          title={running ? "Pausar a simulacao" : "Iniciar a simulacao"}
           className={cn(
             "flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-colors",
             running ? "text-degraded hover:bg-panel-2" : "bg-signal/15 text-signal hover:bg-signal/25",
           )}
         >
           {running ? <Pause size={13} /> : <Play size={13} />}
-          {running ? "Pause" : "Run"}
+          {running ? "Pausar" : "Iniciar"}
         </button>
-        <button type="button" onClick={step} className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-ink-dim hover:bg-panel-2 hover:text-ink">
-          <SkipForward size={13} /> Step
+        <button
+          type="button"
+          onClick={step}
+          title="Avancar um passo (tick) da simulacao"
+          className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-ink-dim hover:bg-panel-2 hover:text-ink"
+        >
+          <SkipForward size={13} /> Passo
         </button>
-        <div className="mx-1 h-4 w-px bg-edge" />
+        <div className="mx-1 h-4 w-px bg-edge" title="Velocidade da simulacao" />
         {SPEEDS.map((s) => (
           <button
             key={s.tps}
@@ -84,18 +90,25 @@ export function TopBar() {
 
       {/* seed */}
       <div className="flex items-center gap-1.5">
-        <span className="text-[0.66rem] uppercase tracking-wider text-ink-faint">Seed</span>
+        <span
+          className="cursor-help text-[0.66rem] uppercase tracking-wider text-ink-faint"
+          title="Semente (seed): numero que gera a rede. A mesma seed sempre produz exatamente a mesma simulacao."
+        >
+          Seed
+        </span>
         <input
           value={seedInput}
           onChange={(e) => setSeedInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && applySeed()}
           className="w-20 rounded-md border border-edge bg-void/60 px-2 py-1 font-mono text-xs text-ink focus:border-signal/50"
-          aria-label="Simulation seed"
+          aria-label="Semente da simulacao"
+          title="Digite um numero e pressione Enter para gerar uma rede diferente"
         />
         <button
           type="button"
           onClick={randomSeed}
-          title="Randomise seed"
+          title="Sortear uma rede aleatoria"
+          aria-label="Sortear uma rede aleatoria"
           className="rounded-md border border-edge p-1.5 text-ink-dim hover:border-edge-bright hover:text-ink"
         >
           <Dices size={14} />
@@ -103,21 +116,29 @@ export function TopBar() {
       </div>
 
       <div className="ml-auto flex items-center gap-4">
-        <div className="flex items-center gap-2 font-mono text-xs">
+        <div
+          className="flex cursor-help items-center gap-2 font-mono text-xs"
+          title="Tick: cada passo de tempo da simulacao. O contador mostra quantos passos ja se passaram."
+        >
           <span className={cn("h-2 w-2 rounded-full", connected ? "bg-online live-dot" : "bg-unreachable")} />
           <span className="text-ink-faint">tick</span>
-          <span className="w-12 text-ink tabular">{tick.toLocaleString("en-US")}</span>
+          <span className="w-12 text-ink tabular">{tick.toLocaleString("pt-BR")}</span>
         </div>
         <div className="flex items-center gap-1">
-          <Link href="/about" className="rounded-md px-2 py-1 text-xs text-ink-dim hover:bg-panel-2 hover:text-ink">
-            Architecture
+          <Link
+            href="/sobre"
+            className="rounded-md px-2 py-1 text-xs text-ink-dim hover:bg-panel-2 hover:text-ink"
+            title="Como o projeto foi construido e as decisoes de arquitetura"
+          >
+            Arquitetura
           </Link>
           <a
             href="https://github.com"
             target="_blank"
             rel="noreferrer"
             className="rounded-md border border-edge p-1.5 text-ink-dim hover:border-edge-bright hover:text-ink"
-            aria-label="Source on GitHub"
+            aria-label="Codigo-fonte no GitHub"
+            title="Codigo-fonte no GitHub"
           >
             <GitBranch size={14} />
           </a>

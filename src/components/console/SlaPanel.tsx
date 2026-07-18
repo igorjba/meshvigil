@@ -21,49 +21,61 @@ export function SlaPanel() {
   const noiseFloor = useSimStore((s) => s.snapshot?.noiseFloor ?? -100);
 
   return (
-    <Panel title="Service Level" icon={<Gauge size={13} />} tag="live" className="shrink-0">
+    <Panel
+      title="Nivel de servico"
+      icon={<Gauge size={13} />}
+      tag="ao vivo"
+      hint="Os indicadores de saude da rede (SLA): o quanto ela esta funcionando bem neste momento."
+      className="shrink-0"
+    >
       <div className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-3">
         <StatTile
-          label="Availability"
+          label="Disponibilidade"
           value={formatPercent(sla.availability)}
           tone={fractionTone(sla.availability, 0.98, 0.85)}
           icon={<Activity size={11} />}
-          sub={`${sla.unreachable} meters unreachable`}
+          sub={`${sla.unreachable} medidores fora`}
+          hint="Percentual de medidores que conseguem falar com a central agora. 100% = todos online."
         />
         <StatTile
-          label="Read success"
+          label="Leituras entregues"
           value={formatPercent(sla.readSuccessRate)}
           tone={fractionTone(sla.readSuccessRate, 0.97, 0.85)}
           icon={<RadioTower size={11} />}
-          sub={`${formatNumber(sla.readsDelivered)} / ${formatNumber(sla.readsExpected)} reads`}
+          sub={`${formatNumber(sla.readsDelivered)} / ${formatNumber(sla.readsExpected)} leituras`}
+          hint="Das leituras que os medidores tentaram enviar, quantas chegaram na central."
         />
         <StatTile
           label="MTTR"
           value={`${mttrSeconds(sla, TICK_MS)}s`}
           tone="neutral"
           icon={<Timer size={11} />}
-          sub={`${sla.mttrTicks} ticks mean`}
+          sub={`media de ${sla.mttrTicks} ticks`}
+          hint="Tempo medio de recuperacao: quanto a rede leva, em media, para reconectar um medidor que caiu."
         />
         <StatTile
-          label="Partitions"
+          label="Particoes"
           value={sla.partitions}
           tone={sla.partitions > 1 ? "bad" : "good"}
           icon={<Waypoints size={11} />}
-          sub={sla.partitions > 1 ? "network split" : "fully converged"}
+          sub={sla.partitions > 1 ? "rede dividida" : "rede unida"}
+          hint="Em quantos pedacos isolados a rede esta. 1 = tudo conectado; 2 ou mais = a rede se partiu."
         />
         <StatTile
-          label="RF noise floor"
+          label="Ruido de RF"
           value={formatDbm(noiseFloor)}
           tone={noiseFloor > -90 ? "warn" : "neutral"}
           icon={<TriangleAlert size={11} />}
-          sub={noiseFloor > -90 ? "degraded" : "nominal"}
+          sub={noiseFloor > -90 ? "degradado" : "normal"}
+          hint="Nivel de interferencia no radio (em dBm). Quanto mais alto (menos negativo), pior o sinal e mais enlaces caem."
         />
         <StatTile
-          label="Reads delivered"
+          label="Total de leituras"
           value={formatNumber(sla.readsDelivered)}
           tone="neutral"
           icon={<RadioTower size={11} />}
-          sub="since seed"
+          sub="desde o inicio"
+          hint="Quantidade acumulada de leituras entregues desde que esta rede (seed) comecou."
         />
       </div>
     </Panel>

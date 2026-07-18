@@ -118,13 +118,14 @@ function buildFrameFields(frame: HdlcFrame): ParsedField[] {
   const add = (name: string, span: Span, group: FieldGroup, value?: string, description?: string) =>
     f.push({ name, span, group, hex: "", ...(value ? { value } : {}), ...(description ? { description } : {}) });
 
-  add("Format field", { offset: 1, length: 2 }, "hdlc", `len=${frame.format.length}`, frame.format.segmented ? "segmented" : undefined);
-  add("Destination address", { offset: 3, length: frame.destination.bytes }, "hdlc", frame.destination.hex, "server / upper");
-  add("Source address", { offset: 3 + frame.destination.bytes, length: frame.source.bytes }, "hdlc", frame.source.hex, "client / lower");
-  add("Control", { offset: 3 + frame.destination.bytes + frame.source.bytes, length: 1 }, "hdlc", `0x${frame.control.raw.toString(16)}`, frame.control.name);
-  if (frame.hcs) add("HCS", frame.hcs.span, "hdlc", frame.hcs.ok ? "valid" : "INVALID", "header check sequence");
-  if (frame.llc) add("LLC header", frame.llc.span, "llc", frame.llc.hex, frame.llc.direction);
-  add("FCS", frame.fcs.span, "hdlc", frame.fcs.ok ? "valid" : "INVALID", "frame check sequence");
+  const validez = (ok: boolean) => (ok ? "valido" : "INVALIDO");
+  add("Campo de formato", { offset: 1, length: 2 }, "hdlc", `len=${frame.format.length}`, frame.format.segmented ? "segmentado" : undefined);
+  add("Endereco de destino", { offset: 3, length: frame.destination.bytes }, "hdlc", frame.destination.hex, "servidor / superior");
+  add("Endereco de origem", { offset: 3 + frame.destination.bytes, length: frame.source.bytes }, "hdlc", frame.source.hex, "cliente / inferior");
+  add("Controle", { offset: 3 + frame.destination.bytes + frame.source.bytes, length: 1 }, "hdlc", `0x${frame.control.raw.toString(16)}`, frame.control.name);
+  if (frame.hcs) add("HCS", frame.hcs.span, "hdlc", validez(frame.hcs.ok), "verificacao do cabecalho");
+  if (frame.llc) add("Cabecalho LLC", frame.llc.span, "llc", frame.llc.hex, frame.llc.direction === "command" ? "comando" : "resposta");
+  add("FCS", frame.fcs.span, "hdlc", validez(frame.fcs.ok), "verificacao do frame");
   return f;
 }
 
@@ -134,8 +135,8 @@ export function parseFrame(input: string | Uint8Array): ParsedFrame {
   const errors: string[] = [];
 
   const hdlc = decodeHdlc(bytes);
-  if (hdlc.hcs && !hdlc.hcs.ok) errors.push("HCS mismatch — header may be corrupt");
-  if (!hdlc.fcs.ok) errors.push("FCS mismatch — frame may be corrupt");
+  if (hdlc.hcs && !hdlc.hcs.ok) errors.push("HCS nao confere — o cabecalho pode estar corrompido");
+  if (!hdlc.fcs.ok) errors.push("FCS nao confere — o frame pode estar corrompido");
 
   const fields = buildFrameFields(hdlc);
   const readings: Reading[] = [];
@@ -156,9 +157,9 @@ export function parseFrame(input: string | Uint8Array): ParsedFrame {
         collectReadings(apdu.data, readings);
         pushDataFields(apdu.data, fields);
       }
-      if (apdu.accessError) errors.push(`data-access-result: ${apdu.accessError}`);
+      if (apdu.accessError) errors.push(`resultado de acesso: ${apdu.accessError}`);
     } catch (err) {
-      errors.push(err instanceof ByteParseError ? err.message : `APDU decode failed: ${String(err)}`);
+      errors.push(err instanceof ByteParseError ? err.message : `falha ao decodificar a APDU: ${String(err)}`);
     }
   }
 

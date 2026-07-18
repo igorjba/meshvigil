@@ -25,7 +25,7 @@ export function Console() {
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
-      <h1 className="sr-only">MeshVigil — AMI mesh simulator and observability console</h1>
+      <h1 className="sr-only">MeshVigil — simulador de rede mesh AMI e console de monitoramento</h1>
       <TopBar />
       <main className="grid min-h-0 flex-1 gap-3 overflow-y-auto p-3 lg:grid-cols-[1.6fr_1fr] lg:grid-rows-[minmax(25rem,1.3fr)_minmax(22rem,1fr)]">
         <section className="min-h-[360px] lg:col-start-1 lg:row-start-1 lg:min-h-0">
@@ -60,9 +60,10 @@ function TopologyPanel() {
   const selectedNodeId = useSimStore((s) => s.selectedNodeId);
   return (
     <Panel
-      title="Network Topology"
+      title="Topologia da rede"
       icon={<Network size={13} />}
-      tag={`${nodeCount} nodes · ${linkCount} links up`}
+      tag={`${nodeCount} nos · ${linkCount} enlaces ativos`}
+      hint="Mapa da rede de medidores. Cada ponto e um dispositivo: losango = central (head-end), quadrado = coletor, circulo = medidor. As linhas sao os enlaces de radio; os pontos que se movem sao os dados fluindo ate a central."
       className="h-full"
       bodyClassName="relative"
     >

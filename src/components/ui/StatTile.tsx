@@ -16,11 +16,19 @@ interface StatTileProps {
   sub?: ReactNode;
   tone?: StatTone;
   icon?: ReactNode;
+  /** Plain-language explanation shown on hover over the whole tile. */
+  hint?: string;
 }
 
-export function StatTile({ label, value, sub, tone = "neutral", icon }: StatTileProps) {
+export function StatTile({ label, value, sub, tone = "neutral", icon, hint }: StatTileProps) {
   return (
-    <div className="flex flex-col gap-1 rounded-lg border border-edge/70 bg-panel-2/60 px-3 py-2.5">
+    <div
+      title={hint}
+      className={cn(
+        "flex flex-col gap-1 rounded-lg border border-edge/70 bg-panel-2/60 px-3 py-2.5",
+        hint && "cursor-help",
+      )}
+    >
       <div className="flex items-center gap-1.5 text-[0.62rem] font-medium uppercase tracking-[0.12em] text-ink-faint">
         {icon}
         {label}

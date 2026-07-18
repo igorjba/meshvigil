@@ -82,11 +82,11 @@ function corrupt(bytes: Uint8Array): Uint8Array {
 }
 
 export const SAMPLE_FRAMES: readonly SampleFrame[] = [
-  frameSample("energy", "Energy push (+A total)", "DataNotification with one active-energy register.", energyPush),
-  frameSample("multi", "Multi-register push", "Energy, voltage, current and instantaneous power in one push.", multiRegisterPush),
-  frameSample("rf", "RF link telemetry", "RSSI and mesh hop count reported over COSEM.", rfTelemetryPush),
-  frameSample("get", "GET-Response (normal)", "Client-polled read of the energy register.", getResponse),
-  frameSample("corrupt", "Corrupt frame (bad FCS)", "One byte flipped in transit — the parser flags the FCS mismatch.", corrupt(energyPush)),
+  frameSample("energy", "Energia (+A total)", "DataNotification com um registrador de energia ativa.", energyPush),
+  frameSample("multi", "Multiplos registradores", "Energia, tensao, corrente e potencia instantanea num so envio.", multiRegisterPush),
+  frameSample("rf", "Telemetria do enlace RF", "RSSI e contagem de saltos na malha reportados via COSEM.", rfTelemetryPush),
+  frameSample("get", "GET-Response (normal)", "Leitura do registrador de energia solicitada pelo cliente.", getResponse),
+  frameSample("corrupt", "Frame corrompido (FCS invalido)", "Um byte alterado no caminho — o parser acusa o FCS que nao confere.", corrupt(energyPush)),
 ];
 
 // Local helper: signed 16-bit encoded as `long`, kept here to avoid widening the

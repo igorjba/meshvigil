@@ -158,7 +158,7 @@ npm run e2e            # Playwright end-to-end (dirige um browser real)
 
 ```
 src/
-  app/                 # App Router: pagina do console, /about, error boundaries, rotas de API
+  app/                 # App Router: pagina do console, /sobre, error boundaries, rotas de API
     api/health         # probe de liveness que faz self-test do codec DLMS
     api/snapshot       # persistencia opcional de snapshot (Upstash)
   components/

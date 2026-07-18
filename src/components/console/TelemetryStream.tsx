@@ -17,24 +17,29 @@ export function TelemetryStream() {
   const selectNode = useSimStore((s) => s.selectNode);
 
   return (
-    <Panel title="Telemetry Stream" icon={<Radio size={13} />} tag={`${readings.length} buffered`}>
+    <Panel
+      title="Fluxo de telemetria"
+      icon={<Radio size={13} />}
+      tag={`${readings.length} na fila`}
+      hint="As leituras que os medidores enviam a cada ciclo: consumo, tensao, energia acumulada e qualidade do sinal. Clique no codigo do medidor para ver o frame DLMS bruto."
+    >
       <div className="h-full overflow-y-auto">
         <table className="w-full border-collapse font-mono text-[0.7rem]">
           <thead className="sticky top-0 z-10 bg-panel/95 text-[0.6rem] uppercase tracking-wider text-ink-faint backdrop-blur">
             <tr className="[&>th]:px-2.5 [&>th]:py-1.5 [&>th]:text-left [&>th]:font-medium">
-              <th>Meter</th>
-              <th className="text-right">Power</th>
-              <th className="text-right">Voltage</th>
-              <th className="text-right">Energy</th>
-              <th className="text-right">RSSI</th>
-              <th className="text-right">Hops</th>
+              <th title="Codigo do medidor. Clique para inspecionar o frame DLMS.">Medidor</th>
+              <th className="text-right" title="Potencia instantanea consumida, em watts (W)">Potencia</th>
+              <th className="text-right" title="Tensao da rede eletrica, em volts (V)">Tensao</th>
+              <th className="text-right" title="Energia total acumulada, em quilowatt-hora (kWh)">Energia</th>
+              <th className="text-right" title="Forca do sinal de radio recebido, em dBm. Mais proximo de zero = melhor.">RSSI</th>
+              <th className="text-right" title="Numero de saltos (hops) ate a central: quantos dispositivos a leitura atravessa.">Saltos</th>
             </tr>
           </thead>
           <tbody>
             {readings.length === 0 ? (
               <tr>
                 <td colSpan={6} className="px-3 py-4 text-center text-ink-faint">
-                  Waiting for the first read cycle…
+                  Aguardando o primeiro ciclo de leitura…
                 </td>
               </tr>
             ) : (
@@ -56,7 +61,7 @@ export function TelemetryStream() {
                         type="button"
                         onClick={inspect}
                         className="rounded-sm text-signal hover:underline"
-                        title={`Inspect ${r.meterId}'s DLMS frame`}
+                        title={`Inspecionar o frame DLMS do medidor ${r.meterId}`}
                       >
                         {r.meterId}
                       </button>

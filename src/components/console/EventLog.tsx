@@ -24,10 +24,16 @@ export function EventLog() {
   const events = useSimStore((s) => s.events);
 
   return (
-    <Panel title="Event Log" icon={<ScrollText size={13} />} tag={`${events.length}`} className="min-h-0">
+    <Panel
+      title="Registro de eventos"
+      icon={<ScrollText size={13} />}
+      tag={`${events.length}`}
+      hint="Historico do que aconteceu na rede: falhas injetadas, quedas e recuperacoes, em ordem do mais recente para o mais antigo."
+      className="min-h-0"
+    >
       <div className="h-full overflow-y-auto px-1 py-1 font-mono text-[0.7rem]">
         {events.length === 0 ? (
-          <p className="px-3 py-4 text-ink-faint">No events yet. Inject some chaos.</p>
+          <p className="px-3 py-4 text-ink-faint">Nenhum evento ainda. Injete algum caos.</p>
         ) : (
           <ul>
             {events.map((e, i) => (

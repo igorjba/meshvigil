@@ -5,18 +5,18 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "MeshVigil — AMI Mesh Simulator & Observability Console",
+    default: "MeshVigil — Simulador de Rede Mesh AMI e Console de Monitoramento",
     template: "%s · MeshVigil",
   },
   description:
-    "A deterministic RF-mesh smart-metering simulator with chaos injection, live reconvergence, SLA telemetry and a real DLMS/COSEM frame parser at its core.",
+    "Simulador determinístico de rede RF-mesh de medição inteligente, com injeção de caos, reconvergência ao vivo, telemetria de SLA e um parser DLMS/COSEM real no coração.",
   applicationName: "MeshVigil",
   authors: [{ name: "Igor" }],
-  keywords: ["DLMS", "COSEM", "AMI", "smart metering", "RF mesh", "observability", "chaos engineering"],
+  keywords: ["DLMS", "COSEM", "AMI", "medição inteligente", "RF mesh", "observabilidade", "engenharia de caos"],
   openGraph: {
-    title: "MeshVigil — AMI Mesh Simulator & Observability Console",
+    title: "MeshVigil — Simulador de Rede Mesh AMI e Console de Monitoramento",
     description:
-      "Simulate an RF-mesh AMI network, inject chaos, and watch it reconverge — with a real DLMS/COSEM parser decoding every frame.",
+      "Simule uma rede AMI RF-mesh, injete caos e veja a malha reconvergir — com um parser DLMS/COSEM real decodificando cada frame.",
     type: "website",
   },
   robots: { index: true, follow: true },
@@ -29,7 +29,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
+    <html lang="pt-BR" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <body className="min-h-screen antialiased">{children}</body>
     </html>
   );
