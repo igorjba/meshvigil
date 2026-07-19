@@ -31,6 +31,9 @@ const isProd = process.env.NODE_ENV === "production";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Playwright drives the dev server on 127.0.0.1; without this, Next 16 blocks
+  // its own /_next dev resources as cross-origin and the Web Worker never boots.
+  allowedDevOrigins: ["127.0.0.1"],
   async headers() {
     return [
       {
