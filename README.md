@@ -5,7 +5,7 @@
 **Simulador de rede mesh AMI e console de observabilidade, com um parser DLMS/COSEM real no núcleo.**
 
 [![CI](https://github.com/igorjba/meshvigil/actions/workflows/ci.yml/badge.svg)](https://github.com/igorjba/meshvigil/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License: proprietary](https://img.shields.io/badge/license-proprietary-red.svg)](LICENSE)
 
 <p align="center">
   <img src="docs/console.png" alt="Console do MeshVigil — topologia, SLA, inspector DLMS e telemetria" width="900" />
@@ -272,6 +272,6 @@ função.
 
 ## Licença
 
-MIT — veja [LICENSE](LICENSE).
+Todos os direitos reservados a Igor Bahia. Veja [LICENSE](LICENSE).
 
 Autoria: Igor Bahia · [github.com/igorjba](https://github.com/igorjba)

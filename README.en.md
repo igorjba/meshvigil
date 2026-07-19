@@ -5,7 +5,7 @@
 **An AMI mesh simulator and observability console, with a real DLMS/COSEM parser at its core.**
 
 [![CI](https://github.com/igorjba/meshvigil/actions/workflows/ci.yml/badge.svg)](https://github.com/igorjba/meshvigil/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License: proprietary](https://img.shields.io/badge/license-proprietary-red.svg)](LICENSE)
 
 <p align="center">
   <img src="docs/console.png" alt="MeshVigil console — topology, SLA, DLMS inspector and telemetry" width="900" />
@@ -272,6 +272,6 @@ timeout.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+All rights reserved by Igor Bahia. See [LICENSE](LICENSE).
 
 Author: Igor Bahia · [github.com/igorjba](https://github.com/igorjba)
